@@ -135,12 +135,10 @@ export const nodeJsByteUtils = {
     }
 
     const string = nodeJsByteUtils.toLocalBufferType(buffer).toString('utf8', start, end);
+    
     if (fatal) {
-      for (let i = 0; i < string.length; i++) {
-        if (string.charCodeAt(i) === 0xfffd) {
+      if (string.includes('\ufffd')) {
           parseUtf8(buffer, start, end, true);
-          break;
-        }
       }
     }
     return string;
